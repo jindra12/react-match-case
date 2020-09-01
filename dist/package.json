@@ -1,0 +1,37 @@
+{
+  "name": "react-match-case",
+  "version": "0.0.1",
+  "description": "React library for pattern matching and conditional rendering",
+  "main": "index.js",
+  "repository": "https://github.com/jindra12/react-match-case.git",
+  "author": "Jan Jindráček",
+  "license": "MIT",
+  "man": [
+    "./README.md"
+  ],
+  "keywords": [
+    "react",
+    "typescript",
+    "typed",
+    "match",
+    "case",
+    "switch",
+    "condition",
+    "conditional",
+    "pattern",
+    "pattern matching",
+    "matching",
+    "matched",
+    "matchto",
+    "if",
+    "functional",
+    "utility"
+  ],
+  "dependencies": {
+    "matchto": "^3.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
