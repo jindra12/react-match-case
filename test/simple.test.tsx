@@ -4,7 +4,11 @@ import renderer from 'react-test-renderer';
 
 describe("Can match simple patterns", () => {
     test("Won't crash on empty match", () => {
-
+        const rendered = renderer.create(
+            <Match item="Hello world" kind="all">
+            </Match>
+        );
+        expect(rendered).toBe("");
     });
     test("Can match string patterns", () => {
         const rendered = renderer.create(
@@ -39,6 +43,25 @@ describe("Can match simple patterns", () => {
         expect(rendered).toBe("1 3");
     });
     test("Can match Date patterns", () => {
-
+        const date = new Date();
+        const wrong = new Date(date);
+        wrong.setFullYear(2000);
+        const rendered = renderer.create(
+            <Match item={date}>
+                <Case pattern={Date}>
+                    1{" "}
+                </Case>
+                <Case pattern={wrong}>
+                    2{" "}
+                </Case>
+                <Case pattern={date}>
+                    3{" "}
+                </Case>
+                <Case pattern={/202/}>
+                    4
+                </Case>
+            </Match>
+        );
+        expect(rendered).toBe("1 3 4");
     });
 });

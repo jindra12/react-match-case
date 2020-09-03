@@ -3,7 +3,6 @@ import { AllowedTo, KindOfMatch, InnerMatch } from 'matchto/types';
 import { exact } from 'matchto/utils/identity';
 import match, { Any } from 'matchto';
 import { CaseProps, Case } from './Case';
-import PropTypes from 'prop-types';
 
 export interface MatchProps<T extends AllowedTo> {
     /**
