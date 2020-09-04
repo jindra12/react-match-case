@@ -91,9 +91,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
             <>
                 {childProps.map((prop, i) => (
                     <Case
-                        pattern={prop.pattern}
-                        exact={prop.exact}
-                        guard={prop.guard}
+                        {...prop}
                         key={(keys[i] === undefined || keys[i] === null) ? i : keys[i]}
                         ref={(component: Case<T> | null) => {
                             if (component) {

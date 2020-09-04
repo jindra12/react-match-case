@@ -1,17 +1,38 @@
 import React from "react";
-import { AllowedTo, MatchValue } from "matchto/types";
+import { AllowedTo, MatchValue, GuardMatch } from "matchto/types";
 import { exact } from 'matchto/utils/identity';
-import match from 'matchto';
+import matchto, { Any } from 'matchto';
 
 export interface PatternProps<T extends AllowedTo> {
+    /**
+     * Item to be matched
+     */
     item: T;
+    /**
+     * Pattern to match against
+     */
     to: MatchValue<T>;
+    /**
+     * Guard condition
+     */
+    guard?: GuardMatch<T>;
+    /**
+     * If the match fails, this components children will render
+     */
+    not?: boolean;
+    /**
+     * Should it be an exact match? (Deep compare)
+     */
+    exact?: boolean;
 }
 
 interface PatternState {
     valid: boolean;
 }
 
+/**
+ * Render children in case prop 'item' is matched by prop 'to'
+ */
 export class Pattern<T extends AllowedTo> extends React.Component<PatternProps<T>, PatternState> {
     state: PatternState = {
         valid: false,
@@ -27,7 +48,19 @@ export class Pattern<T extends AllowedTo> extends React.Component<PatternProps<T
     }
     private validate = () => {
         const { props } = this;
-        this.setState({ valid: Boolean(match(props.item).to(props.to).solve()) });
+        const statement = matchto(props.item);
+        if (props.exact) {
+            statement.to(Any).guard(item => exact(item, props.to) && (!props.guard || props.guard(item)));
+        } else {
+            statement.to(props.to);
+            if (props.guard) {
+                statement.guard(props.guard);
+            }
+        }
+        if (props.not) {
+            statement.not();
+        }
+        this.setState({ valid: Boolean(statement.solve()) });
     }
     public render() {
         const { props, state } = this;

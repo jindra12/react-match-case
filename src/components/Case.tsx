@@ -19,7 +19,7 @@ export interface CaseProps<T extends AllowedTo> {
      */
     cut?: boolean;
     /**
-     * Should it be an exact match?
+     * Should it be an exact match? (Deep compare)
      */
     exact?: boolean;
 }
