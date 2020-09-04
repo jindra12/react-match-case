@@ -1,6 +1,7 @@
 import React from 'react';
 import { Match } from '../src/components/Match';
 import { Case } from '../src/components/Case';
+import { utils } from '../src/index';
 import renderer from 'react-test-renderer';
 
 describe("Can match simple patterns", () => {
@@ -65,4 +66,20 @@ describe("Can match simple patterns", () => {
         );
         expect(rendered.toJSON()?.toString()).toBe("1, ,3, ,4");
     });
+    /*test("Can perform null checks", () => {
+        const rendered = renderer.create(
+            <Match item={null} kind="all">
+                <Case pattern={null}>
+                    1{" "}
+                </Case>
+                <Case pattern={[]}>
+                    2{" "}
+                </Case>
+                <Case pattern={utils.Any}>
+                    3
+                </Case>
+            </Match>
+        );
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
+    });*/
 });

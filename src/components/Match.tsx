@@ -1,5 +1,5 @@
 import React from 'react';
-import { AllowedTo, KindOfMatch, InnerMatch } from 'matchto/types';
+import { AllowedTo, KindOfMatch, InnerMatch, MatchValue } from 'matchto/types';
 import { exact } from 'matchto/utils/identity';
 import match, { Any } from 'matchto';
 import { CaseProps, Case } from './Case';
@@ -47,7 +47,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
     }
     private updateChildren = () => {
         const { props } = this;
-        const matchto: InnerMatch<T, any> = match(props.item, props.kind);
+        const matchto: InnerMatch<NonNullable<T>, any> = match(props.item!, props.kind);
         this.cases.forEach(component => {
             component.validate(false);
             if (component.props.exact) {
@@ -61,7 +61,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
                         return false;
                     });
             } else {
-                matchto.to(component.props.pattern, () => component.validate(true));
+                matchto.to(component.props.pattern as MatchValue<NonNullable<T>>, () => component.validate(true));
                 if (component.props.guard) {
                     matchto.guard(component.props.guard);
                 }

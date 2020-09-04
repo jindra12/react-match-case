@@ -5,7 +5,7 @@ export interface CaseProps<T extends AllowedTo> {
     /**
      * Match the item of the parent component to this pattern
      */
-    pattern: MatchValue<T>;
+    pattern: MatchValue<T>
     /**
      * Guard condition
      */
