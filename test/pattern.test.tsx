@@ -1,3 +1,4 @@
+import React from 'react';
 import { Pattern } from '../src/components/Pattern';
 import renderer from 'react-test-renderer';
 
@@ -16,7 +17,7 @@ describe("Can match simple patterns using single pattern component", () => {
                 </Pattern>
             </>
         );
-        expect(rendered).toBe("1 3");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
     });
     test("Can match numeric patterns", () => {
         const rendered = renderer.create(
@@ -32,7 +33,7 @@ describe("Can match simple patterns using single pattern component", () => {
                 </Pattern>
             </>
         );
-        expect(rendered).toBe("1 3");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
     });
     test("Can match Date patterns", () => {
         const date = new Date();
@@ -51,6 +52,6 @@ describe("Can match simple patterns using single pattern component", () => {
                 </Pattern>
             </>
         );
-        expect(rendered).toBe("1 3");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
     });
 });

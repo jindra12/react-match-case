@@ -94,7 +94,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
                         pattern={prop.pattern}
                         exact={prop.exact}
                         guard={prop.guard}
-                        key={keys[i] === undefined ? i : keys[i]}
+                        key={(keys[i] === undefined || keys[i] === null) ? i : keys[i]}
                         ref={(component: Case<T> | null) => {
                             if (component) {
                                 this.cases.push(component);
@@ -117,6 +117,6 @@ Match.propTypes = {
                 return new Error('Only children of "Match" component should be Cases!');
             }
             return null;
-        }).find((msg: Error | null) => Boolean(msg)) || null;
+        })?.find((msg: Error | null) => Boolean(msg)) || null;
     }
 }

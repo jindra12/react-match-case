@@ -1,3 +1,4 @@
+import React from 'react';
 import { Match } from '../src/components/Match';
 import { Case } from '../src/components/Case';
 import renderer from 'react-test-renderer';
@@ -8,7 +9,7 @@ describe("Can match simple patterns", () => {
             <Match item="Hello world" kind="all">
             </Match>
         );
-        expect(rendered).toBe("");
+        expect(rendered.toJSON()?.toString()).toBeFalsy();
     });
     test("Can match string patterns", () => {
         const rendered = renderer.create(
@@ -24,11 +25,11 @@ describe("Can match simple patterns", () => {
                 </Case>
             </Match>
         );
-        expect(rendered).toBe("1 3");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
     });
     test("Can match numeric patterns", () => {
         const rendered = renderer.create(
-            <Match item={5}>
+            <Match item={5} kind="all">
                 <Case pattern={Number}>
                     1{" "}
                 </Case>
@@ -40,14 +41,14 @@ describe("Can match simple patterns", () => {
                 </Case>
             </Match>
         );
-        expect(rendered).toBe("1 3");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
     });
     test("Can match Date patterns", () => {
         const date = new Date();
         const wrong = new Date(date);
         wrong.setFullYear(2000);
         const rendered = renderer.create(
-            <Match item={date}>
+            <Match item={date} kind="all">
                 <Case pattern={Date}>
                     1{" "}
                 </Case>
@@ -62,6 +63,6 @@ describe("Can match simple patterns", () => {
                 </Case>
             </Match>
         );
-        expect(rendered).toBe("1 3 4");
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3, ,4");
     });
 });
