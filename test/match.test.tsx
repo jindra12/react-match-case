@@ -66,20 +66,49 @@ describe("Can match simple patterns", () => {
         );
         expect(rendered.toJSON()?.toString()).toBe("1, ,3, ,4");
     });
-    /*test("Can perform null checks", () => {
+    test("Can perform null checks", () => {
+        const arrays = [
+            null,
+            [1, 2, 3],
+            undefined,
+        ];
         const rendered = renderer.create(
-            <Match item={null} kind="all">
-                <Case pattern={null}>
-                    1{" "}
-                </Case>
-                <Case pattern={[]}>
-                    2{" "}
-                </Case>
-                <Case pattern={utils.Any}>
-                    3
-                </Case>
-            </Match>
+            <>
+                <Match item={arrays[0]} kind="all">
+                    <Case pattern={null}>
+                        1{" "}
+                    </Case>
+                    <Case pattern={[]}>
+                        2{" "}
+                    </Case>
+                    <Case pattern={utils.Any}>
+                        3
+                    </Case>
+                </Match>
+                <Match item={arrays[1]} kind="all">
+                    <Case pattern={null}>
+                        4{" "}
+                    </Case>
+                    <Case pattern={undefined}>
+                        5{" "}
+                    </Case>
+                    <Case pattern={[1, 2]}>
+                        6
+                    </Case>
+                </Match>
+                <Match item={arrays[2]} kind="all">
+                    <Case pattern={undefined}>
+                        7{" "}
+                    </Case>
+                    <Case pattern={[]}>
+                        8{" "}
+                    </Case>
+                    <Case pattern={utils.Any}>
+                        9
+                    </Case>
+                </Match>
+            </>
         );
-        expect(rendered.toJSON()?.toString()).toBe("1, ,3");
-    });*/
+        expect(rendered.toJSON()?.toString()).toBe("1, ,3,6,7, ,9");
+    });
 });

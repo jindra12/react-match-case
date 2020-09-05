@@ -50,7 +50,7 @@ export class Pattern<T extends AllowedTo> extends React.Component<PatternProps<T
         const { props } = this;
         const statement = matchto(props.item!);
         if (props.exact) {
-            statement.to(Any).guard(item => exact(item, props.to) && (!props.guard || props.guard(item)));
+            statement.to(Any as any).guard(item => exact(item, props.to) && (!props.guard || props.guard(item)));
         } else {
             statement.to(props.to as MatchValue<NonNullable<T>>);
             if (props.guard) {

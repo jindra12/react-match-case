@@ -1512,10 +1512,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-matchto@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/matchto/-/matchto-3.1.0.tgz#b9791089ee5bd0533faade0817489decad2d72d6"
-  integrity sha512-rCv6niUbWEQax3RDE3G3w818fUErBGKsVHZzc2uH9x7Vg9qsEQvLoPBLDefpQgh5ikAFKmYhk4Mtd+zFhokXHQ==
+matchto@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/matchto/-/matchto-3.2.2.tgz#356286f19422c6fed2bd3432bb1ea6f843ffd44f"
+  integrity sha512-fkp3iXrgq1NOjxwSHLh7hk+ZTR3VOk66rXsxAPFJRBS/QIYH/xbFfM/tSL88jbscYTeDIPfqlybtCGl2IiruCQ==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -1989,7 +1989,7 @@ react-is@^16.8.1:
 "react-match-case@file:../dist":
   version "0.0.1"
   dependencies:
-    matchto "^3.1.0"
+    matchto "^3.2.2"
 
 react@^16.13.1:
   version "16.13.1"

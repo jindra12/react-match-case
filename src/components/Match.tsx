@@ -1,5 +1,5 @@
 import React from 'react';
-import { AllowedTo, KindOfMatch, InnerMatch, MatchValue } from 'matchto/types';
+import { AllowedTo, KindOfMatch } from 'matchto/types';
 import { exact } from 'matchto/utils/identity';
 import match, { Any } from 'matchto';
 import { CaseProps, Case } from './Case';
@@ -47,13 +47,13 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
     }
     private updateChildren = () => {
         const { props } = this;
-        const matchto: InnerMatch<NonNullable<T>, any> = match(props.item!, props.kind);
+        const matchto: any = match(props.item!, props.kind);
         this.cases.forEach(component => {
             component.validate(false);
             if (component.props.exact) {
                 matchto
-                    .to(Any, () => component.validate(true))
-                    .guard(result => {
+                    .to(Any as any, () => component.validate(true))
+                    .guard((result: any) => {
                         const isValid = exact(result, component.props.pattern);
                         if (!component.props.guard || component.props.guard(result)) {
                             return isValid;
@@ -61,7 +61,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
                         return false;
                     });
             } else {
-                matchto.to(component.props.pattern as MatchValue<NonNullable<T>>, () => component.validate(true));
+                matchto.to(component.props.pattern, () => component.validate(true));
                 if (component.props.guard) {
                     matchto.guard(component.props.guard);
                 }
@@ -81,8 +81,12 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
         let childProps: Array<CaseProps<T> & { children: any }> = [];
         let keys: Array<string | number | null> = [];
         if (Array.isArray(this.props.children)) {
-            childProps = (this.props.children as Array<React.ReactElement<CaseProps<T> & { children: any }>>).map(child => child.props);
-            keys = (this.props.children as Array<React.ReactElement<CaseProps<T>>>).map(child => child.key);
+            childProps = (this.props.children as Array<React.ReactElement<CaseProps<T> & { children: any }>>)
+                .filter(child => Boolean(child.props))
+                .map(child => child.props);
+            keys = (this.props.children as Array<React.ReactElement<CaseProps<T>>>)
+                .filter(child => Boolean(child.props))
+                .map(child => child.key);
         } else if (Boolean(this.props.children)) {
             childProps = [this.props.children.props];
             keys = [this.props.children.key];

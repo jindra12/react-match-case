@@ -28,7 +28,7 @@
     "utility"
   ],
   "dependencies": {
-    "matchto": "^3.1.0"
+    "matchto": "^3.2.2"
   },
   "peerDependencies": {
     "react": "^16.13.1",
