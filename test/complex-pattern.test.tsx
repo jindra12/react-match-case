@@ -69,4 +69,27 @@ describe("Can match complex patterns using Pattern (exact/not/guard conditions)"
         );
         expect(rendered.toJSON()?.toString()).toBe("1, ");
     });
+    test("Can use delayed execution to prevent errors on render", () => {
+        const arrays = [
+            [1, 2, 3],
+            null,
+        ];
+        const rendered = renderer.create(
+            <>
+                <Pattern item={arrays[0]} to={null}>
+                    null
+                </Pattern>
+                <Pattern item={arrays[0]} to={[]}>
+                    {() => arrays[0]!.length}
+                </Pattern>
+                <Pattern item={arrays[1]} to={null}>
+                    null
+                </Pattern>
+                <Pattern item={arrays[1]} to={[]}>
+                    {() => arrays[1]!.length}
+                </Pattern>
+            </>
+        );
+        expect(rendered.toJSON()?.toString()).toBe("3,null");
+    });
 });

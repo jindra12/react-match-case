@@ -24,6 +24,8 @@ export interface PatternProps<T extends AllowedTo> {
      * Should it be an exact match? (Deep compare)
      */
     exact?: boolean;
+
+    children: React.ReactNode | (() => React.ReactNode);
 }
 
 interface PatternState {
@@ -64,6 +66,6 @@ export class Pattern<T extends AllowedTo> extends React.Component<PatternProps<T
     }
     public render() {
         const { props, state } = this;
-        return state.valid && props.children;
+        return state.valid && (props.children instanceof Function ? props.children() : props.children);
     }
 }

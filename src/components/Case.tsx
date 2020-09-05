@@ -22,6 +22,8 @@ export interface CaseProps<T extends AllowedTo> {
      * Should it be an exact match? (Deep compare)
      */
     exact?: boolean;
+
+    children: React.ReactNode | (() => React.ReactNode);
 }
 
 interface CaseState {
@@ -40,6 +42,6 @@ export class Case<T extends AllowedTo> extends React.Component<CaseProps<T>, Cas
     };
     public render() {
         const { state, props } = this;
-        return state.valid && props.children;
+        return state.valid && (props.children instanceof Function ? props.children() : props.children);
     }
 }
