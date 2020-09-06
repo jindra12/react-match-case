@@ -49,6 +49,7 @@ export class Match<T extends AllowedTo> extends React.Component<MatchProps<T>> {
         const { props } = this;
         const matchto: any = match(props.item!, props.kind);
         this.cases.forEach(component => {
+            component.register(this);
             component.validate(false);
             if (component.props.exact) {
                 matchto

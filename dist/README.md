@@ -79,6 +79,76 @@ expect(rendered.toJSON()?.toString()).toBe("1, ,3");
 
 ```
 
+## Example of using prolog-like cut (if one case is true don't evaluate the rest)
+
+```JSX
+
+const rendered = renderer.create(
+    <Match item={{ a: 5, b: 10 }} kind="all">
+        <Case pattern={{ a: 5, b: 10 }} cut>
+            1{" "}
+        </Case>
+        <Case pattern={{ a: 5 }}>
+            2{" "}
+        </Case>
+    </Match>
+);
+expect(rendered.toJSON()?.toString()).toBe("1, ");
+
+```
+
+## Example of end-tail recursion with exact match (two objects exact equality)
+
+```JSX
+
+const rendered = renderer.create(
+    <Match item={[1, 2, 3, 4]}>
+        <Case pattern={[]} exact></Case>
+        <Case pattern={[utils.Any]} rematch={item => item.slice(1)}>
+            {(items: number[]) => items[0]}
+        </Case>
+    </Match>
+);
+expect(rendered.toJSON()?.toString()).toBe("1,2,3,4");
+
+```
+
+## Example of using negation
+
+```JSX
+
+const rendered = renderer.create(
+    <Match item="Hello world">
+        <Case pattern={Number} not>
+            1{" "}
+        </Case>
+        <Case pattern={String} not>
+            2{" "}
+        </Case>
+    </Match>
+);
+expect(rendered.toJSON()?.toString()).toBe("1, ");
+
+```
+
+## Example of guard conditions
+
+```JSX
+
+const rendered = renderer.create(
+    <Match item="Hello world">
+        <Case pattern={String} guard={s => s.length > 5}>
+            1{" "}
+        </Case>
+        <Case pattern={String} guard={s => s.length <= 5}>
+            2{" "}
+        </Case>
+    </Match>
+);
+expect(rendered.toJSON()?.toString()).toBe("1, ");
+
+```
+
 ## Footer
 
 If you have any ideas on how to improve this package, or have discovered any bugs, please fill out an issue or pull request.

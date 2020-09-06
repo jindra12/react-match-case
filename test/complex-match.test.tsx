@@ -123,4 +123,15 @@ describe("Can match complex patterns using match (exact/not/guard conditions)", 
         );
         expect(rendered.toJSON()?.toString()).toBe("3,null");
     });
+    test("Can create recursive pattern match", () => {
+        const rendered = renderer.create(
+            <Match item={[1, 2, 3, 4]}>
+                <Case pattern={[]} exact></Case>
+                <Case pattern={[utils.Any]} rematch={item => item.slice(1)}>
+                    {(items: number[]) => items[0]}
+                </Case>
+            </Match>
+        );
+        expect(rendered.toJSON()?.toString()).toBe("1,2,3,4");
+    });
 });
